@@ -14,8 +14,7 @@ async function run(): Promise<void> {
     await client.db("admin").command({ ping: 1 });
     console.log("Successfully connected to database.");
   } catch (error) {
-    console.log("Error connecting to database: " + error);
-    return;
+    throw new Error("Error connecting to database: " + error);
   }
 
   console.log("1. Get entries");
@@ -64,7 +63,7 @@ async function getFirstTenUsers(collection: Collection<User>): Promise<void> {
       console.log("Collection is empty.");
     }
   } catch (error) {
-    console.log("Error getting all users: " + error);
+    throw new Error("Error getting all users: " + error);
   }
 }
 
@@ -76,7 +75,7 @@ async function addNewUser(user: User, collection: Collection<User>): Promise<voi
     });
     console.log("User added.");
   } catch (error) {
-    console.log("Error adding new user: " + error);
+    throw new Error("Error adding new user: " + error);
   }
 }
 
@@ -101,6 +100,6 @@ async function deleteUser(id: string, collection: Collection<User>) {
     await collection.deleteOne({ _id: new ObjectId(id) });
     console.log("User deleted.")
   } catch (error) {
-    console.log("Error deleting user: " + error);
+    throw new Error("Error deleting user: " + error);
   }
 }
